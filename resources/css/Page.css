@@ -1,0 +1,57 @@
+.table-page {
+    display: flex;
+    justify-content: center;
+}
+.leftify-children {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.top-page-actions  {
+    margin-left: 35px;
+}
+.btn-page-container {
+    justify-content: flex-end;
+}
+
+.btn-container > *{
+    margin-right: 8px;
+}
+
+/* .table-page {
+    width: 80%;
+} */
+
+.table-page-container {
+    margin-top: 29px;
+    display: flex;
+    justify-content: center;
+}
+
+.table-page-col8 {
+    width: 90% !important;
+}
+
+.default-validation {
+  display: none;
+  color: #ff4500;
+  margin-top: 3px;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.show {
+  display: block;
+}
+.postPage{
+    width: 100%;
+    margin: 0 30px;
+}
+.cke_chrome {
+    width: 100% !important;
+}
+
+.table-page-width {
+    width: 200px;
+}

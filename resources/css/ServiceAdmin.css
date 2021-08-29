@@ -1,0 +1,371 @@
+.service h1 {
+    color: #00a99d;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+.service h4 {
+    color: #00a99d;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-top: 15px;
+}
+.service h5 {
+    font-size: 14px;
+    color: #5a5757;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: left;
+}
+.submitService {
+    margin-bottom: 15px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.fa {
+    font-size: 22px;
+}
+
+.fa-edit {
+    color: #1a8cff;
+}
+
+.fa-delete {
+    color: #ff4d4d;
+}
+
+.fa-plus {
+    font-size: 18px;
+}
+
+.service {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.service-add-edit {
+    width: 90%;
+    float: right;
+    transform: translate(0px, -14px);
+}
+.table-list-service {
+    width: 92%;
+    transform: translate(28px, 0px);
+}
+.table-service {
+    border-radius: 12px;
+    box-shadow: 0 6px 10px -4px rgb(0 0 0 / 15%);
+    background-color: #fff;
+    color: #252422;
+    position: relative;
+    border: 0;
+    margin: auto;
+    width: 95%;
+}
+.list-img {
+    width: 28px;
+}
+.error-image {
+    color: red;
+    font-size: 18px;
+    text-align: left;
+}
+.image-service {
+    width: 80px;
+    padding: 10px;
+}
+.table-service-8 {
+    padding: 0 30px;
+}
+.table-service table {
+    color: #00a99d;
+    text-align: left;
+    border-bottom: 1px solid #e6e6e6;
+    border-collapse: collapse;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.table-service-col8 {
+    margin-left: unset !important;
+}
+
+.input-checkbox {
+    transform: translate(23px, 0px);
+}
+
+.td-nameService {
+    /* / width: 200px; / */
+}
+
+.label-table {
+    display: flex;
+    justify-content: left;
+    font-size: 28px;
+    font-weight: 100;
+    padding-left: 30px;
+    padding-top: 15px;
+}
+
+.actions-table {
+    display: flex;
+    justify-content: space-between;
+    width: 99%;
+    margin: auto;
+    padding-top: 15px;
+    margin-bottom: 10px;
+}
+
+.info-table svg {
+    margin-top: 8px;
+    transition: 0.2s ease;
+}
+.info-table svg:hover {
+    color: #00a99d;
+}
+
+.text-truncate-table {
+    word-break: break-all;
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 115px;
+    height: auto;
+}
+.text-truncate-table:active {
+    overflow: visible;
+    white-space: unset;
+    font-size: 13px;
+    height: auto;
+}
+
+.list-edit-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.img-edit-service {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.delete-img-edit-service {
+    cursor: pointer;
+}
+.delete-img-edit-service:hover {
+    color: red;
+}
+
+.img-edit-service-remove {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red; */
+    display: none;
+}
+.group-search-add {
+    display: flex;
+    margin-right: 13px;
+}
+.search-table {
+    height: 39px;
+}
+.search-table input {
+    width: 320px;
+    height: 40px;
+    color: #66615b;
+    outline: none;
+    padding-left: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+.search-table input:focus {
+    border: 1px solid #00a99d;
+}
+
+.search-table span {
+    position: relative;
+    right: 23px;
+    top: 2px;
+    color: #66615b;
+}
+
+/*-------- Add + Edit ---------------*/
+.bp3-heading {
+    color: #00a99d !important;
+}
+.form-input {
+    margin-left: 55px;
+}
+
+.inputHotel {
+    border: 1px solid #ccc;
+    width: 85%;
+    height: 35px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.search__list {
+    margin-left: 40px;
+    margin-right: 40px;
+    display: block;
+}
+
+#is_activated {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-group button {
+    height: 40px;
+    font-weight: bold;
+}
+
+.action-button {
+    margin-bottom: 5px;
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+}
+
+.inputService {
+    padding-top: 7px;
+    color: #808080;
+    outline: none;
+}
+
+.inputService-name {
+    border: 1px solid #ccc;
+    height: 30px;
+    padding-top: 7px;
+    color: #808080;
+    border-radius: 5px;
+}
+
+.search__list-title {
+    min-width: 100px;
+}
+
+.icon-map {
+    width: 1.2em;
+    height: 1.2em;
+    padding-right: 7px;
+    font-size: 18px;
+    color: #00a99d;
+}
+.detail-container {
+    overflow-x: auto;
+}
+.grid-detail {
+    display: grid;
+}
+.grid-detail .container-panel .content-panel > h4 {
+    margin-top: 20px;
+}
+.detail-bottom {
+    margin: 0 20px;
+}
+.service-news-info {
+    padding: 0px 15px 20px 2px;
+}
+/* .detail-container
+    > div
+    > div.container-panel
+    > div.row.row-modal
+    > div.col-9.panel-img {
+    width: 470px;
+    height: 350px;
+}
+.detail-container
+    > div
+    > div.container-panel
+    > div.row.row-modal
+    > div.col-3.itemPanel
+    > div
+    > div {
+    width: 160px;
+    height: 110px;
+} */
+
+.detail-container > div > div.container-panel {
+    padding: 20px 20px 0px 20px;
+}
+
+.modal-backdrop.show {
+    z-index: 10;
+}
+
+.click-detail {
+    color: #337ab7 !important;
+    -webkit-text-decoration: revert;
+    text-decoration: underline;
+    max-width: 250px;
+    word-break: break-all;
+}
+.detail-container .contentPanel {
+    border-bottom: none;
+}
+.detail-container .row-modal {
+    display: flex;
+}
+.detail-container .panel-img {
+    height: 140px;
+    width: 170px;
+}
+.detail-container .panel-img img {
+    height: 140px;
+    width: 170px;
+}
+.detail-container .panel img {
+    height: 140px;
+    width: 170px;
+}
+.detail-container .panel {
+    height: 140px !important;
+    width: 170px !important;
+    margin-right: 10px;
+}
+.detail-container .row-modal {
+    justify-content: center;
+}
+.detail-container .itemPanel .col {
+    display: flex;
+}
+.group-img-detail {
+    display: flex;
+    justify-content: center;
+}
+
+.detail-container .panel {
+    margin-bottom: 10px;
+    padding-right: 0;
+    padding-left: 0px;
+    width: 100%;
+    height: 100px;
+}
+.modal-backdrop.show {
+    opacity: 0.2;
+}
+.service-4 {
+    padding-top: 4px;
+    padding-right: 0;
+}
+.service-8 {
+    padding-left: 0;
+}
+.service-list-item label {
+    padding: 3px;
+    cursor: pointer;
+}
+.detail-container img {
+    max-width: 100%;
+    cursor: pointer;
+}
+.group-services {
+    overflow-y: scroll;
+    max-height: 170px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

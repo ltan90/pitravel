@@ -1,0 +1,204 @@
+.featured-grid {
+    padding-right: 0px;
+    /* padding-left: 6px; */
+    margin-bottom: 15px;
+}
+.featured-content {
+    height: 120px;
+    text-align: center;
+    border: 2px solid #00a99d;
+    border-radius: 5px;
+    padding: 2em 1em;
+}
+.service-title {
+    text-align: left;
+    color: #00a99d;
+}
+
+.featured-grids {
+    width: 100%;
+}
+
+.featured-content span {
+    font-size: 2em;
+    color: #00a99d;
+}
+
+.featured-content p {
+    font-size: 1em;
+    line-height: 1.8em;
+    margin-top: 10px;
+    color: #777;
+}
+.style-img {
+    padding: unset;
+    width: 30px;
+    height: 30px;
+}
+.service-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 7px;
+}
+.text-service {
+    color: #999696;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0 0;
+    word-break: break-word;
+}
+
+.td-email {
+    word-break: break-all;
+}
+
+.group-action {
+    min-width: unset !important;
+}
+
+.actions-hotel {
+    position: absolute;
+    transform: translate3d(-132px, -81px, 0px) !important;
+    box-shadow: 1px 1px 5px #ccc;
+    border: 1px solid #bfbfbf;
+    background-color: #ffff;
+    min-width: unset !important;
+    z-index: 1;
+    border-radius: 5px;
+}
+.actions-hotel::after {
+    content: "";
+    width: 17px;
+    height: 179px;
+    background: #000;
+    position: absolute;
+    right: -18px;
+    top: 0;
+    background: transparent;
+}
+
+.group-action {
+    display: flex;
+    flex-direction: column;
+    padding-top: 5px;
+}
+
+.group-action::after {
+    content: "";
+    position: absolute;
+    top: 41%;
+    right: -11.5px;
+    width: 20px;
+    height: 20px;
+    background-color: #ffff;
+    z-index: -1;
+    transform: rotate(45deg);
+    border-top: 1px solid #bfbfbf;
+    border-right: 1px solid #bfbfbf;
+}
+
+.action-button {
+    min-width: unset !important;
+    width: 100px;
+    color: #ffff;
+}
+
+.fa-ellipsiV {
+    font-size: 20px;
+}
+.dropdownleft:hover .fa-ellipsiV {
+    color: #00a99d;
+}
+
+.btn-actions-fa {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    display: flex;
+    align-items: center;
+}
+
+/* --------- switch active ------  */
+.css-1v96km2-Switch {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 11px;
+    left: 2px;
+    background-color: #fff;
+    border-radius: 13px;
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease;
+    right: 3px !important;
+    left: 22px !important;
+}
+.css-19a995p-Switch {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 22px !important;
+    left: 3px !important;
+    background-color: #fff;
+    border-radius: 9px;
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease;
+}
+.css-xjimrv-Switch {
+    position: relative;
+    display: inline-block;
+    width: 40px !important;
+    height: 19px !important;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#services {
+    margin-top: 20px;
+}
+
+
+
+@media only screen and (max-width: 480px) {
+    .group-room-service {
+        display: block !important;
+        width: 100% !important;
+        margin-top: 10px !important;
+    }
+    .rowRoom-service {
+        display: flex;
+        flex-direction: unset !important;
+        justify-content: space-around;
+    }
+    #services {
+        margin-top: 0px;
+    }
+    .text-service {
+        font-size: 14px;
+    }
+ }
+
+ @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .group-room-service {
+        display: block !important;
+        width: 100% !important;
+        margin-top: 10px !important;
+    }
+    .rowRoom-service {
+        display: flex;
+        flex-direction: unset !important;
+        justify-content: space-around;
+    }
+    #services {
+        margin-top: 0px;
+    }
+    .text-service {
+        font-size: 14px;
+    }
+ }

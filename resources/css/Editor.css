@@ -1,0 +1,18 @@
+.leftify-children {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.default-validation {
+    display: none;
+    color: #ff4500;
+    margin-top: 3px;
+    font-style: italic;
+    font-size: 13px;
+}
+
+.show {
+    display: block;
+}

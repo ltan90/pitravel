@@ -1,0 +1,97 @@
+  /* --------- Modal popup -------------  */
+  .modal-delete {
+    display: block;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 200px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* .modal-content {
+    margin-top: 100px;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+} */
+.delete{
+    width: 35%;
+    max-height: 50vh;
+    padding: 15px;
+    margin: auto;
+}
+/*---- Nút chức năng ở dưới----  */
+.two-button button {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 40px;
+    padding: 15px;
+    padding-top: 12px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+.two-button {
+    display: flex;
+    justify-content: center;
+}
+
+.button-yes {
+    margin-right: 20px;
+    /* background-color: red; */
+    color: white;
+}
+.button-cancel {
+    color: #fff;
+}
+
+/*------- Nút X đóng---- */
+.closeModal {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    color: #ccc;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.closeModal:hover {
+    color: black;
+}
+
+/*--------Delete--------- */
+.label-delete {
+    color: #00a8a8;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.content-delete {
+    background-color: #f2f2f2;
+    padding-bottom: 17px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-delete p {
+    text-align: center;
+    padding-top: 25px;
+    font-size: 18px;
+}
+
+.content-delete b {
+    font-size: 20px;
+}
+
+.nameDelete {
+    color: #00a8a8;
+    text-align: center;
+}

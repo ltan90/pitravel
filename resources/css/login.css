@@ -1,0 +1,116 @@
+section {
+    background: url("../../public/images/bgLogin.jpg");
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+}
+.form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px;
+    padding: 50px 30px;
+    border-radius: 10px;
+    box-shadow: 7px 7px 60px #000;
+    background-color: #fff;
+}
+
+.back-to-home {
+    width: 5%;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.title {
+    color: #1682e7;
+    font-size: 2em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.control-login {
+    margin-top: 25px;
+    position: relative;
+}
+.control input {
+    padding: 10px;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    color: #000;
+    outline: none;
+    border: none;
+    margin: 0.5em 0 0.2rem 0;
+    border: 1px solid #9cc9ed;
+}
+.control .input-login {
+    color: #fff;
+    text-transform: uppercase;
+    background: #0085ef;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 12px;
+}
+.control .loading-search {
+    position: absolute;
+    top: 8px;
+    right: 106px;
+    color: #fff;
+}
+.btn:focus {
+    opacity: 1;
+}
+.loading-login .loading {
+    top: 0;
+}
+.error {
+    color: red;
+    font-size: 20px;
+}
+.form-change {
+    background-color: #fff;
+    padding: 10px 20px 37px;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+.message {
+    color: red;
+    font-size: 16px;
+}
+/* .modal-pass{
+    width: 31%;
+} */
+.pass label {
+    font-size: 18px;
+    margin-top: 17px;
+}
+.container-pass {
+    /* height: 61.8vh; */
+    /* background-color: #2122228f; */
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 100%;
+}
+
+.modal-pass {
+    width: 70%;
+    position: absolute;
+    top: 29%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.text-confirm {
+    margin-top: 5px;
+}

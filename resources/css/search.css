@@ -1,0 +1,536 @@
+svg,
+video {
+    display: unset !important;
+    vertical-align: unset !important;
+}
+.searchComponent {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 87%;
+    padding: 20px 0px 20px 0;
+    margin: 0 auto;
+    max-width: 1322px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.group-searchComponent {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+}
+
+/* khi ở màn hình PC thì cho nằm ngang (mặc định là nằm dọc)*/
+.input-search,
+.room,
+.people {
+    width: 350px;
+    height: 50px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    outline: none;
+    border-radius: 5px;
+}
+
+.room,
+.people {
+    cursor: pointer;
+}
+
+.room span,
+.people span {
+    float: left;
+    margin-left: 2px;
+    transform: translate(10px, 3px);
+}
+
+.group-search {
+    position: relative;
+}
+
+.icon-search {
+    position: absolute;
+    left: 0;
+    transform: translate(40%, 41%);
+    font-size: 25px;
+    color: #bfbfbf;
+}
+
+.input-search {
+    height: 47.5px;
+    padding-left: 39px;
+    outline: none !important;
+}
+
+.button-search {
+    width: 143px;
+    height: 50px;
+    background-color: #ffaa00;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 20px;
+    outline: none !important;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+input text {
+    margin-left: 35px;
+}
+
+input::placeholder,
+.room,
+.people {
+    color: #bfbfbf;
+    font-size: 16px;
+}
+
+.icon {
+    font-size: 25px;
+    transform: translate(0, 23%);
+}
+
+#icon-search {
+    position: relative;
+    font-size: 25px;
+    color: #bfbfbf;
+}
+
+#inputSearch-red {
+    border: 1px solid #ff3333;
+    box-shadow: 1px 1px 10px #ff3333;
+}
+.chevron-down {
+    font-size: 20px;
+    float: right;
+    margin-top: 13px;
+    margin-right: 5px;
+    transform: rotate(90deg);
+    transition: all 0.3s;
+}
+.group-room:hover .chevron-down {
+    transform: rotate(-90deg);
+}
+.group-people:hover .chevron-down {
+    transform: rotate(-90deg);
+}
+
+/* / Nút tìm  / */
+.button-search:hover {
+    background-color: #febb02;
+}
+
+/*-------- Cửa sổ gợi ý Thành phố  --------*/
+.where:focus-within .group-location {
+    display: block;
+}
+.group-location:hover {
+    display: block;
+}
+.group-location:-ms-keyboard-active {
+    display: none;
+}
+
+.group-location {
+    display: none;
+    position: absolute;
+    width: 350px;
+    max-height: 300px;
+    margin-top: 10px;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 5px #d2d2d2;
+    overflow: scroll;
+    overflow-x: hidden;
+    z-index: 3;
+}
+
+.group-location ul {
+    color: #00a99d;
+    padding-left: 0px;
+    margin-bottom: unset;
+}
+.group-location ul li {
+    list-style: none;
+    padding: 8px 0;
+    border-bottom: 1px solid #e6e6e6;
+    cursor: pointer;
+}
+.group-location ul li:hover {
+    background-color: #f2f2f2;
+}
+.group-location ul li span {
+    padding-left: 10px;
+    font-size: 17px;
+}
+
+.group-location-none {
+    display: none;
+}
+
+.icon-map {
+    width: 1.2em;
+    height: 1.2em;
+    padding-right: 7px;
+}
+.icon-map-location {
+    transform: translate(0px, 3px);
+    font-size: 18px;
+}
+
+.list-city {
+    color: #00a99d;
+    text-align: left;
+    border-bottom: 1px solid #e6e6e6;
+    border-collapse: collapse;
+}
+
+tr {
+    height: 35px;
+    cursor: pointer;
+}
+td {
+    padding-left: 15px;
+}
+tr:hover {
+    background-color: #eff1f0;
+}
+
+/*------ Cửa sổ mở xuống People ---------*/
+.group-action-people {
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    width: 350px;
+    margin-top: 10px;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 5px #d2d2d2;
+    z-index: 3;
+}
+
+.group-action-people::before {
+    content: "";
+    width: 350px;
+    height: 10px;
+    background: transparent;
+    position: absolute;
+    top: -11px;
+    left: 0;
+}
+
+.action {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e6e6e6;
+    color: #777777;
+    font-size: 15px;
+    margin-top: 10px;
+}
+.action p {
+    padding-left: 15px;
+    text-transform: capitalize;
+}
+.action span {
+    font-size: 19px;
+    padding-right: 15px;
+    cursor: pointer;
+}
+
+.number {
+    padding-left: 6px;
+    padding-right: 6px !important;
+    position: relative;
+    top: -2px;
+}
+
+.minus,
+.plus {
+    color: #00a99d;
+    font-size: 21px;
+    position: relative;
+    top: 1.5px;
+}
+.minus-gray,
+.plus-gray {
+    color: #d2d2d2;
+    font-size: 21px;
+    position: relative;
+    top: 1.5px;
+}
+
+/*---- Độ tuổi trẻ em  ----*/
+.action-kid {
+    border: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: #777777;
+    font-size: 15px;
+    margin-top: 10px;
+}
+.action-kid p {
+    padding-left: 15px;
+}
+.action-kid select {
+    border: 1px solid #00a99d;
+    outline: none;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.kidAge {
+    margin-left: 15px;
+}
+
+/*--- check box  ---*/
+.btn-checkbox {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+}
+.btn-checkbox input {
+    margin-left: 17px;
+    margin-top: 0px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.btn-checkbox p {
+    margin-left: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #777777;
+}
+
+/*----- Hover đóng/mở cửa sổ  -----*/
+.group-people:hover .group-action-people {
+    display: block;
+}
+.group-room:hover .group-action-room {
+    display: block;
+}
+
+/*------ Cửa sổ mở xuống Room  -----*/
+.group-action-room {
+    display: none;
+    position: absolute;
+    margin-top: 10px;
+    z-index: 3;
+    background-color: transparent;
+}
+
+.group-action-room::before {
+    content: "";
+    width: 700px;
+    height: 12.5px;
+    background: transparent;
+    position: absolute;
+    top: -12px;
+    left: 0;
+}
+
+.two-calendar {
+    display: flex;
+}
+
+.two-calendar .from .react-calendar {
+    border-bottom: none;
+}
+.two-calendar .to .react-calendar {
+    border-bottom: none;
+}
+
+.day {
+    font-weight: bold;
+    background-color: #eff1f0;
+    color: #777777;
+    height: 30px;
+    padding-top: 3.5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.take {
+    border-right: none;
+}
+.pay {
+    border-left: none;
+}
+.loading-search {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+}
+
+.react-calendar__navigation button {
+    text-transform: capitalize;
+}
+
+.chevron-mobile {
+    display: none;
+}
+
+/* -------- Responsive -----------  */
+/*Smart phone small*/
+@media only screen and (max-width: 480px) {
+    .group-searchComponent {
+        flex-direction: column;
+        margin-top: 7px;
+    }
+    .group-room,
+    .group-people,
+    .button-search {
+        display: none;
+    }
+    .searchComponent {
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        padding: 10px 0px 10px 0;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -5%);
+        margin-top: unset;
+        border-radius: 5px;
+    }
+
+    .where,
+    .group-room,
+    .group-people,
+    .button-search {
+        width: 88%;
+    }
+    .group-location,
+    .room,
+    .people {
+        width: 88%;
+    }
+    .input-search,
+    .room,
+    .people {
+        width: 100% !important;
+    }
+    .group-room,
+    .group-people {
+        margin-bottom: 20px;
+    }
+    .group-room {
+        margin-top: 20px;
+    }
+    .button-search {
+        margin-bottom: 10px;
+    }
+    .chevron-mobile {
+        display: block;
+        color: #ccc;
+        transform: translate(0px, 4px);
+    }
+    .fa-chevron-mobile {
+        font-size: 20px;
+    }
+    .chevron-down {
+        display: none !important;
+    }
+
+    .group-searchComponent-responsive > .group-room,
+    .group-searchComponent-responsive > .group-people,
+    .group-searchComponent-responsive > .button-search {
+        display: block;
+    }
+
+    .group-action-people {
+        width: 88%;
+    }
+    .group-action-room {
+        width: 88%;
+    }
+    .two-calendar {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* iPad  */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .group-room,
+    .group-people,
+    .button-search {
+        display: none;
+    }
+    .searchComponent {
+        width: 55%;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 10px 0px 10px 0;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -5%);
+        margin-top: unset;
+        border-radius: 5px;
+    }
+    .group-searchComponent {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 7px;
+    }
+    .where,
+    .group-room,
+    .group-people,
+    .button-search {
+        width: 88%;
+    }
+    .group-location,
+    .room,
+    .people {
+        width: 88%;
+    }
+    .input-search,
+    .room,
+    .people {
+        width: 100% !important;
+    }
+    .group-room,
+    .group-people {
+        margin-bottom: 20px;
+    }
+    .group-room {
+        margin-top: 20px;
+    }
+    .button-search {
+        margin-bottom: 10px;
+    }
+    .chevron-mobile {
+        display: block;
+        color: #ccc;
+        transform: translate(0px, 4px);
+    }
+    .fa-chevron-mobile {
+        font-size: 20px;
+    }
+    .chevron-down {
+        display: none !important;
+    }
+
+    .group-searchComponent-responsive > .group-room,
+    .group-searchComponent-responsive > .group-people,
+    .group-searchComponent-responsive > .button-search {
+        display: block;
+    }
+
+    .group-action-people {
+        width: 88%;
+    }
+    .group-action-room {
+        width: 88%;
+    }
+    .two-calendar {
+        display: flex;
+        flex-direction: column;
+    }
+}

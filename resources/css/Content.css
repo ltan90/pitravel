@@ -1,0 +1,47 @@
+.content-left {
+    margin-top: 20px;
+    position: relative;
+}
+/* .content-left::after {
+    content: "";
+    background: url("../../public/images/mapVN.png");
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 2;
+} */
+
+.text-content {
+    line-height: 2rem;
+    color: #706f6f;
+    font-size: 16px;
+}
+.hotel-title-name {
+    text-transform: capitalize;
+}
+.content-poss {
+    text-align: justify;
+}
+.city-prov {
+    opacity: 0;
+    cursor: pointer;
+}
+.city-prov:hover {
+    opacity: 1;
+    transform: scale(1.5, 1.5);
+}
+
+@media only screen and (max-width: 480px) {
+    .city-prov {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .city-prov {
+        display: none;
+    }
+}

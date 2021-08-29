@@ -1,0 +1,16 @@
+.table-users tr[disabled] td {
+    filter: blur(1px);
+    pointer-events: none;
+}
+
+.default-validation {
+  display: none;
+  color: #ff4500;
+  margin-top: 3px;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.show {
+  display: block;
+}

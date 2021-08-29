@@ -1,0 +1,191 @@
+
+.nav-menu {
+    height: 100vh;
+    width: 13%;
+    max-width: 200px;
+    position: fixed;
+    left: 0;
+    min-width: 200px;
+}
+.nav-menu-close {
+    max-width: 77px;
+    min-width: 77px;
+    height: 100vh;
+    width: 5%;
+    position: fixed;
+    left: 0;
+}
+
+.pro-sidebar {
+    z-index: 10 !important;
+    width: 100% !important;
+    min-width: unset !important;
+}
+
+.pro-sidebar-header {
+    display: flex;
+    align-items: center;
+    height: 9.4%;
+    min-height: 76px;
+}
+.pro-sidebar .pro-menu .pro-menu-item {
+    color: #cccccc;
+}
+
+.pro-sidebar .pro-menu {
+    padding-top: 30px !important;
+}
+
+.pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item {
+    font-size: 16px !important;
+    margin-bottom: 20px;
+}
+
+.pro-sidebar .pro-menu a {
+    color: #fff !important;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+
+.header-menu{
+    display: flex;
+    margin-left: 6px;
+    transform: translate(6%, 7%);
+}
+
+.header-menu p {
+    padding: 24px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #cccccc;
+}
+
+.pro-icon-warpper {
+    background-color: #f4f3ef !important;
+    border-radius: 50%;
+}
+
+.img-menu {
+    background-image: url('../../public/images/logoVenu.png');
+    background-size: cover;
+    width: 114px;
+    height: 64px;
+    transform: translate(15px, -4px);
+}
+.img-menu-close {
+    background-image: url('../../public/images/logoVenu_small.png');
+    background-size: cover;
+    width: 50px;
+    height: 57px;
+    transform: translate(22%, 0%);
+}
+
+.header-footer p{
+    text-align: center;
+    padding: 10px 0 5px 0;
+    font-size: 12px;
+    color: #cccccc;
+}
+
+.pro-sidebar .pro-menu .pro-menu-item>.pro-inner-item>.pro-icon-wrapper {
+    margin-right: 15px !important;
+    font-size: 17px !important  ;
+}
+
+
+.pro-sidebar > .pro-sidebar-inner > img.sidebar-bg {
+    opacity: 0.6 !important;
+}
+
+.pro-sidebar .pro-menu .pro-menu-item {
+    color: #fff !important;
+}
+
+.pro-sidebar > .pro-sidebar-inner {
+    background-color: #343a40 !important;
+}
+
+.pro-sidebar .pro-menu.shaped .pro-menu-item > .pro-inner-item > .pro-icon-wrapper {
+    background-color: #4d4d4d !important;
+}
+
+.pro-sidebar .pro-menu .activeMenu > .pro-inner-item {
+    color: #81cfe4 !important;
+    position: relative;
+}
+
+.pro-sidebar .pro-menu .activeMenu > .pro-inner-item::after {
+    content: "";
+    width: 33px;
+    height: 33px;
+    background-color: #f4f3ef;
+    transform: rotate(45deg);
+    position: absolute;
+    right: -20px;
+    top: 8px;
+}
+
+/*---- Close menu ---- */
+.pro-sidebar .pro-menu .activeMenu-close > .pro-inner-item {
+    color: #81cfe4 !important;
+    position: relative;
+}
+
+.pro-sidebar .pro-menu .activeMenu-close > .pro-inner-item::after {
+    content: "";
+    width: 30px;
+    height: 30px;
+    background-color: #f4f3ef;
+    transform: rotate(45deg);
+    position: absolute;
+    right: -23px;
+    top: 10px;
+}
+
+.pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:hover::before {
+    content: "";
+    height: 1px;
+    background-color: #81cfe4;
+    position: absolute;
+    left: 21px;
+    bottom: 0px;
+    animation: setWidth 1.5s forwards;
+    max-width: 158px;
+}
+
+.pro-sidebar .pro-menu .activeMenu > .pro-inner-item::before {
+    content: "";
+    height: 1px;
+    background-color: #81cfe4;
+    position: absolute;
+    left: 21px;
+    bottom: 0px;
+    animation: setWidth 1.5s forwards;
+    max-width: 158px;
+}
+
+@keyframes setWidth {
+    from {width: 0px;}
+    to {width: 158px;}
+}
+
+.pro-sidebar .pro-menu.circle .activeMenu > .pro-inner-item > .pro-icon-wrapper {
+    border: 1px solid #81cfe4;
+}
+.pro-sidebar .pro-menu.circle .activeMenu-close > .pro-inner-item > .pro-icon-wrapper {
+    border: 1px solid #81cfe4;
+}
+
+
+.pro-sidebar .pro-menu .menu-close> .pro-inner-item:hover::before {
+    content: unset;
+}
+.pro-sidebar .pro-menu .activeMenu-close > .pro-inner-item:hover::before {
+    content: unset;
+}

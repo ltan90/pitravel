@@ -1,0 +1,350 @@
+.contact-form {
+    background-color: #00a99d;
+    box-sizing: border-box;
+    color: white;
+    border-radius: 15px;
+    padding: 2px 13px 25px;
+    margin-bottom: 20px;
+}
+
+.contact-form > h2 {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.contact-form input {
+    margin-bottom: 8px;
+}
+.contact {
+    padding: 10px 0px;
+}
+.modal-confir {
+    display: block;
+    background-color: #050505a1;
+}
+/* h2, label, .checkbox-inline {
+    display: flex;
+} */
+.checkbox-inline {
+    margin-left: 6px;
+    display: flex;
+    align-items: center;
+    width: 32%;
+}
+.checkbox-inline-text {
+    margin-left: 5px;
+}
+.form-booking {
+    padding: 0 0 20px;
+}
+.form-group {
+    margin: 0 6px;
+    margin-bottom: 15px;
+}
+/* .form-group label {
+    font-weight: 500;
+}
+.form-group label {
+    font-weight: 500;
+} */
+.label-info {
+    margin-bottom: 5px;
+    color: #f2f2f2;
+}
+.checkActive {
+    color: #ffeb3b;
+}
+.md-right {
+    padding-right: 0;
+}
+.checkbox-i-go {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+}
+/* .modal {
+    text-align: center;
+    padding: 0!important;
+}
+  
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+  
+.modal-dialog {
+    width: 30%;
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+} */
+.contact:focus {
+    outline: none;
+    border: none;
+}
+.contact {
+    background-color: #febb02;
+    margin-top: 15px;
+    outline: none;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 1;
+    width: 100%;
+    color: #fff;
+    padding: 10px 0px;
+    margin-left: 4px;
+}
+
+.modal-more-request {
+    padding: 1.5rem 2.5rem 1rem 2.5rem;
+}
+
+.contact:hover {
+    color: #fff;
+    background-color: #ffca38;
+}
+.center_Child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+textarea {
+    width: 100%;
+    margin: auto;
+    height: 110px;
+    color: black;
+    border: 1px solid #666666;
+}
+.modal-title {
+    color: #00a99d;
+    display: flex;
+    margin: 10px 0;
+}
+.text-confirm {
+    font-size: 15px;
+    color: #595959;
+    margin-top: 10px;
+}
+.modal-footer {
+    text-align: center;
+    justify-content: center;
+}
+.modal-footer button {
+    margin: 0 10px;
+}
+.btn-cancel {
+    background-color: #d2d2d2;
+}
+.btn-confirm {
+    background-color: #00a99d;
+}
+.checkLabel {
+    display: none;
+    color: #ffeb3b;
+}
+.check-Label {
+    display: block;
+    color: #ffeb3b;
+}
+.checkInputOpen {
+    display: block;
+    border: 2px solid #bc1212;
+}
+.checkLabelOpen {
+    display: block;
+}
+.group-room-booking:hover .group-action-room-booking {
+    display: block;
+    color: #333;
+}
+
+.room-booking {
+    height: 35px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    outline: none;
+    border-radius: 5px;
+    color: #333;
+}
+
+.room-booking {
+    cursor: pointer;
+}
+
+.room-booking span {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+.group-action-room-booking {
+    display: none;
+    position: absolute;
+    margin-top: 10px;
+    z-index: 3;
+    background-color: transparent;
+}
+
+.group-action-room-booking::before {
+    content: "";
+    width: 588px;
+    height: 12.5px;
+    background: transparent;
+    position: absolute;
+    top: -12px;
+    left: 0;
+}
+.two-calendar {
+    display: flex;
+}
+.amount {
+    margin-top: 20px;
+}
+.date_from {
+    position: relative;
+}
+.date_from input {
+    box-sizing: border-box;
+    outline: 0;
+    width: 100%;
+}
+.iconFrom,
+.iconTo {
+    position: absolute;
+    top: 29px;
+    right: 7px;
+    color: #0e8378;
+    font-size: 21px;
+}
+.date_to {
+    position: relative;
+}
+.date_to input {
+    box-sizing: border-box;
+    outline: 0;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+.col-right {
+    padding-right: 0;
+}
+
+.col-left {
+    padding-left: 0;
+}
+.format {
+    text-transform: capitalize;
+}
+.container-booking {
+    background-color: #10161a85;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    outline: 0;
+    z-index: 7;
+}
+.modal-booking {
+    display: block;
+    width: 32%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.modal-sbumit {
+    width: 32%;
+}
+
+@media only screen and (max-width: 480px) {
+    .row-selection-responsive,
+    .row-calendar-responsive,
+    .row-infor-responsive {
+        flex-direction: unset !important;
+    }
+    .row-infor-responsive > .md-right {
+        padding-right: unset;
+    }
+    .row-infor-responsive > .md-left {
+        padding-left: unset;
+    }
+    .row-calendar-responsive > .md-right {
+        padding-right: unset;
+        width: 48%;
+    }
+    .row-calendar-responsive > .md-left {
+        padding-left: unset;
+        width: 48%;
+    }
+    .checkbox-inline {
+        width: unset;
+    }
+    .modal-booking {
+        width: 89% !important;
+        position: absolute;
+        top: 40% !important;
+        left: 50%;
+    }
+    .modal-sbumit {
+        width: 70%;
+        margin: auto;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .row-selection-responsive,
+    .row-calendar-responsive,
+    .row-infor-responsive {
+        flex-direction: unset !important;
+    }
+    .row-infor-responsive > .md-right {
+        padding-right: unset;
+    }
+    .row-infor-responsive > .md-left {
+        padding-left: unset;
+    }
+    .row-calendar-responsive > .md-right {
+        padding-right: unset;
+        width: 48%;
+    }
+    .row-calendar-responsive > .md-left {
+        padding-left: unset;
+        width: 48%;
+    }
+    .checkbox-inline {
+        width: unset;
+    }
+    .modal-booking {
+        width: 89% !important;
+        position: absolute;
+        top: 40% !important;
+        left: 50%;
+    }
+    .modal-sbumit {
+        width: 70%;
+        margin: auto;
+    }
+ }

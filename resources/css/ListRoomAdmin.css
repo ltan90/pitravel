@@ -1,0 +1,166 @@
+.form {
+    background-color: white;
+    overflow: scroll;
+}
+.search__form {
+    margin-left: 45px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: auto auto auto auto;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.list-room-of {
+    color: #000;
+}
+
+.service > h1 {
+    color: #00a99d;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.table-service table {
+    width: 99%;
+    font-size: 16px;
+}
+
+.table-service table td {
+    color: #5a5757;
+}
+.description {
+    word-break: break-all;
+}
+.fa {
+    font-size: 22px;
+}
+
+.fa-edit {
+    color: #1a8cff;
+}
+
+.fa-delete {
+    color: #ff4d4d;
+}
+
+.fa-plus {
+    font-size: 18px;
+}
+
+.add-service {
+    margin-bottom: 20px;
+}
+
+.actions-table-rooms {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    width: 97.5%;
+}
+
+.btn-add-room {
+    margin-right: 10px;
+}
+
+.room-inputs {
+    padding: 20px;
+    overflow: auto;
+    min-height: 85%;
+}
+.room-description {
+    resize: none;
+    height: 150px;
+}
+.room-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+.fa-icon-save {
+    margin-top: 5px;
+}
+.bed-amount-container {
+    border: none !important;
+    width: 45%;
+    margin-top: 5px;
+}
+
+
+
+.beds-container {
+    padding: 7px 7px 10px 7px;
+    border: 1px solid #00a99d !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-self: flex-start;
+}
+
+.hotel-rooms-container {
+    overflow: auto;
+    min-height: 85%;
+}
+
+.label-beds {
+    margin-bottom: 5px;
+}
+.label-beds::first-letter {
+    text-transform: capitalize;
+}
+
+.group-info-beds {
+    padding: 15px;
+    border: 1px solid #00a99d !important;
+    border: 1px solid #00a99d;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.form-group-bed > label {
+    margin-bottom: 5px;
+}
+
+.form-group-bed {
+    margin-top: 10px;
+}
+
+.form-edit-beds {
+    overflow: auto;
+}
+
+.button-save-bed {
+    margin-left: 20px;
+}
+
+.table-hotelroom {
+    overflow: hidden;
+    padding: 10px;
+}
+
+.table-rooms {
+    width: 97%;
+}
+
+.bed-amount-container input[type="number"]:not([value="0"]) {
+    background-color: #5076f2ba;
+    border: none;
+    box-shadow: 2px 4px 2px rgb(0 0 0 / 20%);
+    border-radius: 5px;
+    color: white;
+}
+
+.default-validation {
+  display: none;
+  color: #ff4500;
+  margin-top: 3px;
+  font-style:italic;
+  font-size: 13px;
+}
+
+.show {
+  display: block;
+}

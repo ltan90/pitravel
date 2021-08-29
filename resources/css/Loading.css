@@ -1,0 +1,15 @@
+/* .fQtKej{
+    background-color: #ffffff00 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+} */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 67%;
+    color: #009688;
+}
+.spinner-border {
+    color: #009688;
+    margin-right: 10px;
+}

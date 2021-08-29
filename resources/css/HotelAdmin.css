@@ -1,0 +1,125 @@
+.sub-input {
+    position: absolute;
+    border: 1px solid red;
+    right: 0px;
+    vertical-align: middle;
+    top: 1px;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+}
+.sub-input:hover {
+    background: red;
+    color: white;
+}
+.img-hotel {
+    border: 1px solid #65656540;
+    padding: 10px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+.img-hotel:hover .delete-sign {
+    display: block;
+}
+.img-hotel img {
+    width: 100%;
+    max-height: 100px;
+    height: 100px;
+}
+
+.gg-map {
+    min-height: 350px;
+}
+
+.delete-sign {
+    top: 7px;
+    right: -3px;
+    padding: 0 5px;
+    color: red;
+    cursor: pointer;
+    font-size: 15px;
+    display: none;
+}
+.service-list-item label {
+    cursor: pointer;
+}
+
+.fastar-hotelList {
+    width: 17px;
+    height: 17px;
+    margin-left: 3px;
+    margin-bottom: 6px;
+}
+.cke_contents {
+    height: 350px !important;
+}
+
+.filter-locations {
+    width: 210px;
+    height: 40px;
+    color: #66615b;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+}
+.filter-locations:focus {
+    border: 1px solid #00a99d;
+}
+
+.group-actions-hotel {
+    display: flex;
+}
+.icon-actions-hotel {
+    margin-right: 10px;
+}
+.icon-actions {
+    font-size: 22px;
+}
+.icon-actions-edit {
+    color: #0d6efd;
+}
+.icon-actions-delete {
+    color: #b02a37;
+}
+.icon-actions-room {
+    color: #146c43;
+}
+
+.icon-actions-hotel {
+    position: relative;
+}
+.tooltiptext {
+    visibility: hidden;
+    width: 65px;
+    background-color: #595959;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 164%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.icon-actions-hotel .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+.icon-actions-hotel:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.css-jfsaru-Switch,
+.css-153wf2s-Switch {
+    border-radius: 12px !important;
+}

@@ -1,0 +1,6 @@
+.not-found {
+    background-image: url("./404.jpg");
+    background-size: contain;
+    overflow-y: hidden;
+    height: 100%;
+}
