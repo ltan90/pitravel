@@ -17,6 +17,8 @@ use App\Traits\BaseResponse;
 use App\Traits\DistanceTrait;
 use App\Traits\ImageSizeTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Facade\FlareClient\Http\Response;
@@ -104,173 +106,45 @@ class HotelController extends Controller
         return $this->getResponse(true, trans('message.txt_created_successfully', ['attribute' => trans('message.hotel')]), new HotelResource($hotelCreated));
     }
 
-    public function update(Request $request, $id)
+    public function update(HotelRequest $request, $id)
     {
-        $limitSize = config('constants.IMAGE_TYPE.LIMIT_SIZE');
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'location_id' => 'required|integer',
-                'name'     => 'required',
-                'email'    => 'email',
-                'phone'    => 'regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                'evaluation' => 'integer',
-                'remove_ids' => 'array',
-                'remove_ids.*' => 'integer',
-                'image'     => 'array',
-                'image.*'   => 'mimes:jpeg,jpg,png|max:' . $limitSize,
-                'service_ids' => 'array',
-            ]
-        );
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->messages(),
-                'status'    => 400
-            ], 400);
-        }
-        $location = $this->locationRepository->find($request->location_id);
-        if (empty($location)) {
-            return response()->json([
-                'status' => 404,
-                'message' => trans('message.txt_not_found', ['attribute' => trans('message.location')])
-            ]);
-        }
-        $hotel = $this->hotelRepository->find($id);
-        if (empty($hotel)) {
-            return response()->json([
-                'status' => 404,
-                'message' => trans('message.txt_not_found', ['attribute' => trans('message.hotel')])
-            ]);
-        }
-        $input = $request->all();
-        $hotelUpdated = $this->hotelRepository->update($id, $input);
-        if (!$hotelUpdated) {
-            return response()->json([
-                'status' => 400,
-                'message' => trans('message.txt_updated_failure', ['attribute' => trans('message.hotel')])
-            ]);
-        }
+        $hotel = $this->hotelRepository->findById($id);
+        if (empty($hotel)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]), null, 404);
 
-        $post = $this->postRepository->getPostByHotelId($id);
-        $postName = $request->input('post_name') ?? '';
-        $postContent = $request->input('post_content') ?? '';
-        if ($post == null) {
-            $postInput['name'] = $postName;
-            $postInput['content'] = $postContent;
-            $postInput['hotel_id'] = $hotelUpdated->id;
-            $postInput['type'] = config('constants.POST_TYPE.HOTEL');
-            $postCreated = $this->postRepository->create($postInput);
-            if (empty($postCreated)) {
-                return response()->json([
-                    'status'  => 400,
-                    'message' => trans('message.txt_created_failure', ['attribute' => trans('message.post')])
-                ]);
-            }
-        } else {
-            $post = $this->postRepository->getPostByHotelId($id);
-            if (empty($post)) {
-                return response()->json([
-                    'status' => 404,
-                    'message' => trans('message.txt_not_found', ['attribute' => trans('message.post')])
-                ]);
-            }
-            $postInput['name'] = $postName;
-            $postInput['content'] = $postContent;
-            $postUpdated = $this->postRepository->update($post->id, $postInput);
-            if (!$postUpdated) {
-                return response()->json([
-                    'status' => 400,
-                    'message' => trans('message.txt_updated_failure', ['attribute' => trans('message.post')])
-                ]);
-            }
-        }
+        $data = $request->all();
+        $hotelUpdated = $this->hotelRepository->update($id, $data);
+        if (!$hotelUpdated) return $this->getResponseValidate(false, trans('message.txt_updated_failure', ['attribute' => trans('message.hotel')]));
 
-        if (is_array($request->remove_ids)) {
-            foreach ($request->remove_ids as $fileId) {
-                $file = $this->fileRepository->find($fileId);
-                if (empty($file)) {
-                    return response()->json([
-                        'status' => 404,
-                        'message' => trans('message.txt_not_found', ['attribute' => trans('message.image')])
-                    ]);
-                }
-                $path = $file->url;
-                if (file_exists($path)) {
-                    @unlink($path);
-                }
-                $fileDeleted = $this->fileRepository->delete($fileId);
-                if (!$fileDeleted) {
-                    return response()->json([
-                        'status' => 400,
-                        'message' => trans('message.txt_deleted_failure', ['attribute' => trans('message.image')])
-                    ]);
+        if (is_array($request->file('galleries'))) {
+            foreach ($hotel->files as $file) {
+                $this->deleteFile($file->url);
+                $this->fileRepository->delete($file->id);
+            }
+
+            foreach ($request->file('galleries') as $file) {
+                if (!empty($file)) {
+                    $files = $this->saveImageSize($file, config('settings.public.hotels'), $hotelUpdated->id);
+
+                    $this->fileRepository->create(
+                        [
+                            'name'   => $hotelUpdated->name,
+                            'url'    => $files['url'],
+                            'mime'      => $files['mime'],
+                            'extension' => $files['extension'],
+                            'fileable_id' => $hotelUpdated->id,
+                            'fileable_type'  => Hotel::class,
+                        ]
+                    );
                 }
             }
         }
-
-        if (is_array($request->file('image'))) {
-            $locationId = $request->location_id;
-            $pathStr = 'images/hotels/' . $locationId . '/';
-            foreach ($request->file('image') as $file) {
-                $fileExt = $file->getClientOriginalExtension();
-                $fileMine = $file->getMimeType();
-                $name = $hotel->id . '_' . Str::random(8) . '.' . $fileExt;
-                $file->move($pathStr, $name);
-                $path = $pathStr . $name;
-                $this->fileRepository->create(
-                    [
-                        'name'   => $name,
-                        'url'    => $path,
-                        'obj_id' => $hotel->id,
-                        'obj_type'  => config('constants.IMAGE_TYPE.HOTEL'),
-                        'mime'      => $fileMine,
-                        'extension' => $fileExt
-                    ]
-                );
+        if (is_array($request->services)){
+            $hotelUpdated->services()->detach();
+            foreach ($request->services as $service) {
+                if (!empty($service)) $hotelUpdated->services()->attach($service);
             }
         }
 
-        $hotelServices = $this->hotelServiceRepository->getServiceIdByHotelId($id)->toArray();
-        $oldHotelIds = array_column($hotelServices, 'service_id');
-        $newHotelIds = $request->service_ids ?? [];
-        $additionalIds = array_diff($newHotelIds, $oldHotelIds);
-        foreach ($additionalIds as $key => $value) {
-            $input = [
-                'hotel_id' => $id,
-                'service_id' => $value
-            ];
-            $hotelServicesCreated = $this->hotelServiceRepository->create($input);
-            if (empty($hotelServicesCreated)) {
-                return response()->json([
-                    'status' => 400,
-                    'message' => trans('message.txt_created_failure', ['attribute' => trans('message.hotel_service')])
-                ]);
-            }
-        }
-
-        $deleteIds = array_diff($oldHotelIds, $newHotelIds);
-        foreach ($deleteIds as $key => $value) {
-            $input = [
-                'hotel_id' => $id,
-                'service_id' => $value
-            ];
-            $hotelService = $this->hotelServiceRepository->findByHotelAndService($id, $value);
-            if (empty($hotelService)) {
-                return response()->json([
-                    'status' => 404,
-                    'message' => trans('message.txt_not_found', ['attribute' => trans('message.hotel_service')])
-                ]);
-            }
-            $hotelServicesDeleted = $this->hotelServiceRepository->delete($hotelService->id);
-            if (!$hotelServicesDeleted) {
-                return response()->json([
-                    'status' => 400,
-                    'message' => trans('message.txt_deleted_failure', ['attribute' => trans('message.hotel_service')])
-                ]);
-            }
-        }
-        // $hotelServices = $this->hotelServiceRepository->getServiceIdByHotelId($id)->toArray();
-        // $hotelIds = array_column($hotelServices, 'service_id');
         return $this->getResponse(true, trans('message.txt_updated_successfully', ['attribute' => trans('message.hotel')]), new HotelResource($hotelUpdated));
     }
 

@@ -49,34 +49,8 @@ class BookingController extends Controller
      **/
     public function store(BookingRequest $request)
     {
-//        $validator = Validator::make(
-//            $request->all(),
-//            [
-//                'hotel_id' => 'required',
-//                'name'     => 'required|max:255',
-//                'email'    => 'required_without:phone',
-//                'phone'    => 'required_without:email',
-//                'date_from' => 'required|date',
-//                'date_to'  => 'required|date|after_or_equal:date_from',
-//                'adult_amount'   => 'required|numeric|min:1',
-//                'children_amount' => 'required|numeric',
-//                'room_amount'    => 'required|numeric|min:1',
-//            ]
-//        );
-//
-//        if ($validator->fails()) {
-//            return response()->json([
-//                'message' => $validator->messages(),
-//                'status'    => 400
-//            ], 400);
-//        }
         $hotel = $this->hotelRepository->findById($request->hotel_id);
-        if (empty($hotel)) {
-            return response()->json([
-                'status' => 404,
-                'message' => trans('message.txt_not_found', ['attribute' => trans('message.hotel')])
-            ]);
-        }
+        if (empty($hotel)) return $this->getResponseValidate(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]));
 
         $data = $request->all();
 

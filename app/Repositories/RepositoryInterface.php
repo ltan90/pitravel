@@ -41,6 +41,13 @@ interface RepositoryInterface
     public function update(int $id, array $attributes);
 
     /**
+     * Update Or Create
+     * @param array $attributes
+     * @return mixed
+     */
+    public function updateOrCreate(array $attributes);
+
+    /**
      * Delete
      * @param int $id
      * @return mixed

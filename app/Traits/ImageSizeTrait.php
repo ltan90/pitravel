@@ -68,6 +68,6 @@ trait ImageSizeTrait
 
     public function deleteFile($file)
     {
-        if (!empty($file) && Storage::exists($file)) Storage::delete($file);
+        if (!empty($file) && Storage::exists(config('filesystems.disks.public.visibility').'/' . $file)) Storage::delete(config('filesystems.disks.public.visibility').'/' . $file);
     }
 }

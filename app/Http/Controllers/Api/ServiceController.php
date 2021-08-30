@@ -86,7 +86,7 @@ class ServiceController extends Controller
 
             $files = $this->saveImageSize($request->icon, config('settings.public.services'), $service->id);
 
-            $this->fileRepository->updateOrCreate($service->id,
+            $this->fileRepository->updateOrCreate(
                 [
                     'name'   => $service->name,
                     'url'    => $files['url'],
