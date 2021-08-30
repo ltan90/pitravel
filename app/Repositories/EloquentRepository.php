@@ -96,6 +96,21 @@ abstract class EloquentRepository implements RepositoryInterface
     }
 
     /**
+     * Update Or Create
+     * @param int $id
+     * @param array $attributes
+     * @return bool|mixed
+     */
+    public function updateOrCreate(int $id, array $attributes)
+    {
+        $result = $this->findById($id);
+        if (!$result) return;
+
+        $result->updateOrCreate($attributes);
+
+        return $result;
+    }
+    /**
      * Delete
      *
      * @param int $id

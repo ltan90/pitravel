@@ -25,11 +25,7 @@ class HotelRepository extends EloquentRepository
      */
     public function showHotel($params)
     {
-        $hotels = $this->_model->select('hotels.*', 'files.url')
-            ->leftJoin('files', function ($join) {
-                $join->on('files.obj_id', '=', 'hotels.id')
-                    ->where('files.obj_type', config('constants.IMAGE_TYPE.HOTEL'));
-            });
+        $hotels = $this->_model->with(['files', 'services', 'rooms', 'location']);
         if ($params['check_activated']) {
             $hotels = $hotels->where('is_approved', 1);
         }

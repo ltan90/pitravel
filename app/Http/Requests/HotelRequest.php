@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Traits\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ServiceRequest extends FormRequest
+class HotelRequest extends FormRequest
 {
     use BaseRequest;
     /**
@@ -26,9 +26,16 @@ class ServiceRequest extends FormRequest
     public function rules()
     {
         $limitSize = config('constants.IMAGE_TYPE.LIMIT_SIZE');
+
         return [
-            'name' => 'required|max:255',
-            'icon'  => 'mimes:jpeg,jpg,png|max:' . $limitSize,
+            'location_id' => 'required|integer',
+            'name'     => 'required|string',
+            'email'    => 'required|email|regex:/\S+@\S+\.\S+/',
+            'phone'    => 'required|min:10|max:15',
+            'reviews' => 'integer',
+            'galleries'    => 'array',
+            'galleries.*'  => 'mimes:jpeg,jpg,png|max:' . $limitSize,
+            'services' => 'array',
         ];
     }
 }

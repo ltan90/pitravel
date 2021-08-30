@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HotelRequest;
 use App\Http\Resources\HotelCollection;
 use App\Http\Resources\HotelResource;
+use App\Models\Hotel;
 use App\Repositories\HotelRepository;
 use App\Repositories\LocationRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\HotelServiceRepository;
 use App\Repositories\RoomRepository;
 use App\Repositories\PostRepository;
+use App\Traits\BaseResponse;
 use App\Traits\DistanceTrait;
+use App\Traits\ImageSizeTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
@@ -20,7 +24,7 @@ use Illuminate\Support\Str;
 
 class HotelController extends Controller
 {
-    use DistanceTrait;
+    use DistanceTrait, BaseResponse, ImageSizeTrait;
     protected $hotelRepository;
     protected $FileRepository;
     protected $hotelServiceRepository;
@@ -64,118 +68,40 @@ class HotelController extends Controller
     {
         $hotel = $request->check_activated ? $this->hotelRepository->findActivateHotel($id) : $this->hotelRepository->findById($id);
 
-        if (empty($hotel)) {
-            return response()->json([
-                'status' => 404,
-                'message' => trans('message.txt_not_found', ['attribute' => trans('message.hotel')])
-            ]);
-        };
+        if (empty($hotel)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]), null, 404);
 
-        //$objType = config('constants.IMAGE_TYPE.HOTEL');
-//        $hotel['images'] = $this->fileRepository->showFile($id, $objType);
-//        $hotel['services'] = $this->hotelServiceRepository->showHotelService($id);
-//        $hotel['posts'] = $this->postRepository->getPostByHotelId($id);
-//        $hotel['rooms'] = $this->roomRepository->getRoomByHotelId($id)->toArray();
-//        $location = $this->locationRepository->findById($hotel->location_id);
-//        if (empty($location)) {
-//            return $hotel['distance'] = null;
-//        }
-//        $hotel['distance'] = $this->getDistance($hotel->lat, $hotel->long, $location->lat, $location->long, config('constants.DISTANCE_UNIT.KILOMETERS'));
         return response()->json([
             'data' => new HotelResource($hotel)
         ], 200);
     }
 
-    public function store(Request $request)
+    public function store(HotelRequest $request)
     {
-        $limitSize = config('constants.IMAGE_TYPE.LIMIT_SIZE');
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'location_id' => 'required|integer',
-                'name'     => 'required|string',
-                'email'    => 'email',
-                'phone'    => 'regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                'evaluation' => 'integer',
-                'image'    => 'array',
-                'image.*'  => 'mimes:jpeg,jpg,png|max:' . $limitSize,
-                'service_ids' => 'array',
-            ]
-        );
+        $data = $request->all();
 
-        if ($validator->fails()) {
-            return response()->json($validator->messages(), 400);
-        }
-        $location = $this->locationRepository->find($request->location_id);
-        if (empty($location)) {
-            return response()->json([
-                'status' => 404,
-                'message' => trans('message.txt_not_found', ['attribute' => trans('message.location')])
-            ]);
-        }
-        $input = $request->all();
-        $hotelCreated = $this->hotelRepository->create($input);
-        if (empty($hotelCreated)) {
-            return response()->json([
-                'status' => 400,
-                'message' => trans('message.txt_created_failure', ['attribute' => trans('message.hotel')])
-            ]);
-        }
+        $hotelCreated = $this->hotelRepository->create($data);
+        if (empty($hotelCreated)) return $this->getResponseValidate(false, trans('message.txt_created_failure', ['attribute' => trans('message.hotel')]));
 
-        if ($request->post_name && $request->post_content) {
-            $postInput['name'] = $request->input('post_name');
-            $postInput['content'] = $request->input('post_content');
-            $postInput['hotel_id'] = $hotelCreated->id;
-            $postInput['type'] = config('constants.POST_TYPE.HOTEL');
-            $postCreated = $this->postRepository->create($postInput);
-            if (empty($postCreated)) {
-                return response()->json([
-                    'status'  => 400,
-                    'message' => trans('message.txt_created_failure', ['attribute' => trans('message.post')])
-                ]);
-            }
-        }
-
-        $locationId = $request->location_id;
-        $pathStr = 'images/hotels/' . $locationId . '/';
-
-        if (is_array($request->file('image'))) {
-            foreach ($request->file('image') as $file) {
-                $fileExt = $file->getClientOriginalExtension();
-                $fileMine = $file->getMimeType();
-                $name = $hotelCreated->id . '_' . Str::random(8) . '.' . $fileExt;
-                $file->move($pathStr, $name);
-                $path = $pathStr . $name;
+        if (is_array($request->file('galleries'))) {
+            foreach ($request->file('galleries') as $file) {
+                $files = $this->saveImageSize($file, config('settings.public.hotels'), $hotelCreated->id);
                 $this->fileRepository->create(
                     [
-                        'name'   => $name,
-                        'url'    => $path,
-                        'obj_id' => $hotelCreated->id,
-                        'obj_type'  => config('constants.IMAGE_TYPE.HOTEL'),
-                        'mime'      => $fileMine,
-                        'extension' => $fileExt
+                        'name'   => $hotelCreated->name,
+                        'url'    => $files['url'],
+                        'mime'      => $files['mime'],
+                        'extension' => $files['extension'],
+                        'fileable_id' => $hotelCreated->id,
+                        'fileable_type'  => Hotel::class,
                     ]
                 );
             }
         }
 
-        if (is_array($request->service_ids)) {
-            foreach ($request->service_ids as $id) {
-                $input = [
-                    'hotel_id' => $hotelCreated->id,
-                    'service_id' => $id
-                ];
-                $hotelServicesCreated = $this->hotelServiceRepository->create($input);
-                if (empty($hotelServicesCreated)) {
-                    return $this->responseError(trans('message.txt_created_failure', ['attribute' => trans('message.hotel_service')]));
-                }
-            }
+        if (is_array($request->services)) {
+            $hotelCreated->services()->attach($request->services);
         }
-        return response()->json([
-            'status' => 200,
-            'data'    => $hotelCreated,
-            'message' => trans('message.txt_created_successfully', ['attribute' => trans('message.hotel')])
-        ]);
+        return $this->getResponse(true, trans('message.txt_created_successfully', ['attribute' => trans('message.hotel')]), new HotelResource($hotelCreated));
     }
 
     public function update(Request $request, $id)
@@ -345,50 +271,26 @@ class HotelController extends Controller
         }
         // $hotelServices = $this->hotelServiceRepository->getServiceIdByHotelId($id)->toArray();
         // $hotelIds = array_column($hotelServices, 'service_id');
-
-        return response()->json([
-            'status' => 200,
-            'data' => $hotelUpdated,
-            'message' => trans('message.txt_updated_successfully', ['attribute' => trans('message.hotel')])
-        ]);
+        return $this->getResponse(true, trans('message.txt_updated_successfully', ['attribute' => trans('message.hotel')]), new HotelResource($hotelUpdated));
     }
 
     public function delete(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'ids' => 'required|array',
-                'ids.*' => 'required|integer'
-            ]
-        );
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->messages(),
-                'status'    => 'error'
-            ], 400);
-        }
+        $rules = [
+            'ids' => 'required|array',
+            'ids.*' => 'required|integer'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) return $this->getResponseValidate(false, $validator->messages());
+
         foreach ($request->ids as $id) {
             $hotel = $this->hotelRepository->findById($id);
-            if (empty($hotel)) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => trans('message.txt_not_found', ['attribute' => trans('message.hotel')])
-                ], 404);
-            }
-            $hotelDeleted = $this->hotelRepository->delete($id);
-            if (!$hotelDeleted) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => trans('message.txt_deleted_failure', ['attribute' => trans('message.hotel')])
-                ], 400);
-            }
+            if (empty($hotel)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]), null, 404);
+
+            $this->hotelRepository->delete($id);
         }
 
-        return response()->json([
-            'status' => 'ok',
-            'message' => trans('message.txt_deleted_successfully', ['attribute' => trans('message.hotel')])
-        ], 200);
+        return $this->getResponse(true, trans('message.txt_deleted_successfully', ['attribute' => trans('message.hotel')]));
     }
     public function changeStatus(Request $request, $id)
     {

@@ -17,11 +17,8 @@ class FileRepository extends EloquentRepository
         return File::class;
     }
 
-    public function showFile($id, $objType)
+    public function showFile(int $id, $type)
     {
-        return $this->_model->select('*')
-            ->where('obj_id', $id)
-            ->where('obj_type', $objType)
-            ->latest('updated_at')->get();
+        return $this->_model->where(['fileable_id' => $id, 'fileable_type' => $type])->first();
     }
 }

@@ -59,14 +59,9 @@ class Hotel extends Model
         return $this->hasMany(Booking::class);
     }
 
-    public function file()
+    public function files()
     {
-        return $this->morphOne(File::class, 'fileable');
-    }
-
-    public function province()
-    {
-        return $this->belongsTo(Province::class);
+        return $this->morphMany(File::class, 'fileable');
     }
 
     public function location()

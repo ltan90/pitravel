@@ -52,7 +52,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::prefix('users')->name('users')->group(function () {
         Route::put('/change-password', [UserController::class, 'changePassword'])->name('changePassword');
     });
-    // Add Booking by ltan
     Route::prefix('bookings')->name('bookings')->group(function () {
         Route::get('', [BookingController::class, 'index'])->name('index');
     });
@@ -87,6 +86,6 @@ Route::prefix('hotels')->name('hotels')->group(function () {
     Route::get('/{id}', [HotelController::class, 'show'])->name('show');
 });
 
-Route::prefix('booking')->name('booking')->group(function () {
+Route::prefix('bookings')->name('bookings')->group(function () {
     Route::post('/', [BookingController::class, 'store'])->name('store');
 });

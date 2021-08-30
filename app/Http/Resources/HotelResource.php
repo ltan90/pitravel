@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\File;
+use App\Models\Hotel;
 use App\Traits\DistanceTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -31,7 +33,7 @@ class HotelResource extends JsonResource
             'title' => $this->title,
             'content' => $this->content,
             'is_approved' => $this->is_approved,
-            'files' => $this->files,
+            'files' => FileResource::collection($this->files),
             'rooms' => RoomResource::collection($this->rooms),
             'services' => ServiceResource::collection($this->services),
             'distance' => $this->getDistance($this->lat, $this->lng, $this->location->lat, $this->location->lng, config('constants.DISTANCE_UNIT.KILOMETERS')),
