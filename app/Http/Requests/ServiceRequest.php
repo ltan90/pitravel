@@ -28,7 +28,7 @@ class ServiceRequest extends FormRequest
         $limitSize = config('constants.IMAGE_TYPE.LIMIT_SIZE');
         return [
             'name' => 'required|max:255',
-            'icon'  => 'mimes:jpeg,jpg,png|max:' . $limitSize,
+            'icon'  => 'required|mimes:jpeg,jpg,png|max:' . $limitSize,
         ];
     }
 }

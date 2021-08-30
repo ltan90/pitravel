@@ -118,14 +118,15 @@ class HotelController extends Controller
         if (is_array($request->file('galleries'))) {
             foreach ($hotel->files as $file) {
                 $this->deleteFile($file->url);
-                $this->fileRepository->delete($file->id);
+                //$this->fileRepository->delete($file->id);
             }
 
             foreach ($request->file('galleries') as $file) {
                 if (!empty($file)) {
                     $files = $this->saveImageSize($file, config('settings.public.hotels'), $hotelUpdated->id);
 
-                    $this->fileRepository->create(
+                    $this->fileRepository->updateOrCreate(
+                        ['fileable_id' => $hotelUpdated->id],
                         [
                             'name'   => $hotelUpdated->name,
                             'url'    => $files['url'],
@@ -160,6 +161,11 @@ class HotelController extends Controller
         foreach ($request->ids as $id) {
             $hotel = $this->hotelRepository->findById($id);
             if (empty($hotel)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]), null, 404);
+
+            foreach ($hotel->files as $file) {
+                $this->deleteFile($file->url);
+                $this->fileRepository->delete($file->id);
+            }
 
             $this->hotelRepository->delete($id);
         }

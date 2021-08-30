@@ -86,7 +86,9 @@ class ServiceController extends Controller
 
             $files = $this->saveImageSize($request->icon, config('settings.public.services'), $service->id);
 
-            $this->fileRepository->updateOrCreate(
+            if (!empty($service->file)) $this->deleteFile($service->file->url);
+
+            $this->fileRepository->updateOrCreate(['fileable_id' => $service->id],
                 [
                     'name'   => $service->name,
                     'url'    => $files['url'],
@@ -116,6 +118,7 @@ class ServiceController extends Controller
             if (empty($service)) return $this->getResponse(
                 false, trans('message.txt_not_found', ['attribute' => trans('message.service')]), null, 404
             );
+            $this->deleteFile($service->file->url);
             $service->file->delete($id);
 
             $this->serviceRepository->delete($id);

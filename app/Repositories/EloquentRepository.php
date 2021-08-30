@@ -96,13 +96,14 @@ abstract class EloquentRepository implements RepositoryInterface
     }
 
     /**
-     * Update Or Create
+     * Create or update a record matching the attributes, and fill it with values.
      * @param array $attributes
+     * @param array $values
      * @return mixed
      */
-    public function updateOrCreate(array $attributes)
+    public function updateOrCreate(array $attributes, array $values = [])
     {
-        $result = $this->_model->updateOrCreate($attributes);
+        $result = $this->_model->updateOrCreate($attributes, $values);
 
         return $result;
     }

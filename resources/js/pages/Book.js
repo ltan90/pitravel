@@ -26,7 +26,7 @@ class Book extends Component {
     async componentDidMount() {
         const hotelId = this.props.match.params.id;
         const data = await this.HotelMiddleware.getHotelById(hotelId);
-        console.log(hotelId);
+        
         if (data.status === 404) {
             this.setState({
                 isShow: true,
