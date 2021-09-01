@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\BookingEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookingRequest;
 use App\Http\Resources\BookingResource;
@@ -63,12 +64,8 @@ class BookingController extends Controller
 
         $bookingCreated = $this->bookingRepository->create($data['booking']);
 
-        $dataEmail['hotel_name'] = $hotel->name;
-        $dataEmail['hotel_address'] = $hotel->address;
-        $dataEmail['hotel_phone'] = $hotel->phone;
-        $dataEmail['hotel_email'] = $hotel->email;
-        $mailTo = $this->configRepository->getMailTo();
-        dispatch(new SendEmailJob($mailTo, $dataEmail));
+        event(new BookingEvent($bookingCreated, $bookingCreated->hotel, $bookingCreated->customer));
+
 
         if (empty($bookingCreated)) return $this->getResponse(false, trans('message.txt_created_failure', ['attribute' => trans('message.booking')]), null, 404);
 
