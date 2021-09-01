@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Hotel extends Model
 {
@@ -72,5 +73,19 @@ class Hotel extends Model
     public function creatorUser()
     {
         return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::created(function ($model) {
+            if (Auth::check()) {
+                $model->creator_id = Auth::id();
+            }
+        });
     }
 }

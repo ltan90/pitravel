@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
+use App\Traits\BaseResponse;
 use Illuminate\Support\Facades\Validator;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    use BaseResponse;
     protected $userRepository;
     protected $roleRepository;
 
@@ -28,55 +30,6 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
     }
-
-    /**
-     * @OA\Get(
-     ** path="/v1/user-login",
-     *   tags={"Login"},
-     *   summary="Login",
-     *   operationId="login",
-     *
-     *   @OA\Parameter(
-     *      name="email",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *           type="string"
-     *      )
-     *   ),
-     *   @OA\Parameter(
-     *      name="password",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *          type="string"
-     *      )
-     *   ),
-     *   @OA\Response(
-     *      response=200,
-     *       description="Success",
-     *      @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *   ),
-     *   @OA\Response(
-     *      response=401,
-     *       description="Unauthenticated"
-     *   ),
-     *   @OA\Response(
-     *      response=400,
-     *      description="Bad Request"
-     *   ),
-     *   @OA\Response(
-     *      response=404,
-     *      description="not found"
-     *   ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      )
-     *)
-     **/
     /**
      * List account
      *
@@ -105,32 +58,18 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $data = $request->all();
+        $data = $request->parameters();
 
-        $user = [];
-        $user['username'] = $data['username'];
-        $user['email'] = $data['email'];
-        $user['password'] = Hash::make($data['password']);
-        $user['is_approved'] = $data['is_approved'];
-
-        $user = $this->userRepository->create($user);
+        $user = $this->userRepository->create($data['user']);
         //event(new Registered($user));
 
         $user->profile()->save(new UserProfile($data['profile']));
 
         $user->roles()->attach($data['role_id']);
 
-        if (empty($user)) {
-            return response()->json([
-                'status' => 400,
-                'message' => trans('message.txt_created_failure', ['attribute' => trans('message.user')])
-            ]);
-        }
-        return response()->json([
-            'status' => 200,
-            'data' => new UserResource($user),
-            'message' => trans('message.txt_created_user_successfully')
-        ]);
+        if (empty($user)) return $this->getResponseValidate(false, trans('message.txt_created_failure', ['attribute' => trans('message.user')]));
+
+        return $this->getResponse(true, trans('message.txt_created_user_successfully', ['attribute' => trans('message.user')]), new UserResource($user));
     }
 
     public function changePassword(Request $request)

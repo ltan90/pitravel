@@ -14,7 +14,7 @@ return [
     'txt_checkpassword_failure' => 'Current password does not match!',
     'txt_changepassword_successfully' => 'Password successfully changed!',
     'txt_subject_mail' => 'Booking notice !',
-    'txt_created_user_successfully' => ':attribute has been created successfully!. Your password is : ',
+    'txt_created_user_successfully' => ':attribute has been created successfully!',
     'txt_permission_failure' => 'You are not have permission to do this request!',
     'txt_unauthenticated' => 'Unauthenticated',
 

@@ -31,4 +31,18 @@ class RoomRequest extends FormRequest
             'personal' => 'integer|min:1'
         ];
     }
+
+    /**
+     * Prepare parameters from Form Request
+     * @return array
+     */
+    public function parameters()
+    {
+        return [
+            'hotel_id' => $this->input('hotel_id'),
+            'name' => $this->input('name'),
+            'bed_type' => $this->input('bed_type'),
+            'personal' => $this->input('personal')
+        ];
+    }
 }

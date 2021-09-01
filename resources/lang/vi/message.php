@@ -14,7 +14,7 @@ return [
     'txt_checkpassword_failure' => 'Mật khẩu hiện tại không khớp!',
     'txt_changepassword_successfully' => 'Mật khẩu đã được thay đổi thành công!',
     'txt_subject_mail' => 'Thông báo booking !',
-    'txt_created_user_successfully' => 'Lưu :attribute vào hệ thống thành công. Mật khẩu của bạn là : ',
+    'txt_created_user_successfully' => 'Lưu :attribute vào hệ thống thành công!',
     'txt_permission_failure' => 'Bạn không được phép thực hiện yêu cầu này!',
     'txt_unauthenticated' => 'Bạn chưa đăng nhập!',
 

@@ -16,6 +16,7 @@ use App\Repositories\PostRepository;
 use App\Traits\BaseResponse;
 use App\Traits\DistanceTrait;
 use App\Traits\ImageSizeTrait;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -79,30 +80,19 @@ class HotelController extends Controller
 
     public function store(HotelRequest $request)
     {
-        $data = $request->all();
+        $data = $request->parameters();
 
         $hotelCreated = $this->hotelRepository->create($data);
-        if (empty($hotelCreated)) return $this->getResponseValidate(false, trans('message.txt_created_failure', ['attribute' => trans('message.hotel')]));
+        if (empty($hotelCreated)) return $this->getResponse(false, trans('message.txt_created_failure', ['attribute' => trans('message.hotel')]), null, 404);
 
         if (is_array($request->file('galleries'))) {
-            foreach ($request->file('galleries') as $file) {
-                $files = $this->saveImageSize($file, config('settings.public.hotels'), $hotelCreated->id);
-                $this->fileRepository->create(
-                    [
-                        'name'   => $hotelCreated->name,
-                        'url'    => $files['url'],
-                        'mime'      => $files['mime'],
-                        'extension' => $files['extension'],
-                        'fileable_id' => $hotelCreated->id,
-                        'fileable_type'  => Hotel::class,
-                    ]
-                );
-            }
+            $this->createOrUpdateGalleries($request->file('galleries'), $hotelCreated);
         }
 
-        if (is_array($request->services)) {
-            $hotelCreated->services()->attach($request->services);
+        if (is_array($data['services'])) {
+            $hotelCreated->services()->attach($data['services']);
         }
+
         return $this->getResponse(true, trans('message.txt_created_successfully', ['attribute' => trans('message.hotel')]), new HotelResource($hotelCreated));
     }
 
@@ -111,37 +101,20 @@ class HotelController extends Controller
         $hotel = $this->hotelRepository->findById($id);
         if (empty($hotel)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]), null, 404);
 
-        $data = $request->all();
+        $data = $request->parameters();
         $hotelUpdated = $this->hotelRepository->update($id, $data);
-        if (!$hotelUpdated) return $this->getResponseValidate(false, trans('message.txt_updated_failure', ['attribute' => trans('message.hotel')]));
+        if (!$hotelUpdated) return $this->getResponse(false, trans('message.txt_updated_failure', ['attribute' => trans('message.hotel')]), null, 404);
 
         if (is_array($request->file('galleries'))) {
             foreach ($hotel->files as $file) {
                 $this->deleteFile($file->url);
-                //$this->fileRepository->delete($file->id);
+                $this->fileRepository->delete($file->id);
             }
-
-            foreach ($request->file('galleries') as $file) {
-                if (!empty($file)) {
-                    $files = $this->saveImageSize($file, config('settings.public.hotels'), $hotelUpdated->id);
-
-                    $this->fileRepository->updateOrCreate(
-                        ['fileable_id' => $hotelUpdated->id],
-                        [
-                            'name'   => $hotelUpdated->name,
-                            'url'    => $files['url'],
-                            'mime'      => $files['mime'],
-                            'extension' => $files['extension'],
-                            'fileable_id' => $hotelUpdated->id,
-                            'fileable_type'  => Hotel::class,
-                        ]
-                    );
-                }
-            }
+            $this->createOrUpdateGalleries($request->file('galleries'), $hotelUpdated, false);
         }
-        if (is_array($request->services)){
+        if (is_array($data['services'])){
             $hotelUpdated->services()->detach();
-            foreach ($request->services as $service) {
+            foreach ($data['services'] as $service) {
                 if (!empty($service)) $hotelUpdated->services()->attach($service);
             }
         }
@@ -172,41 +145,35 @@ class HotelController extends Controller
 
         return $this->getResponse(true, trans('message.txt_deleted_successfully', ['attribute' => trans('message.hotel')]));
     }
-    public function changeStatus(Request $request, $id)
+
+    /**
+     * Create Or Update Galleries
+     * @param array $galleries
+     * @param object $hotel
+     * @param bool $type
+     * @return void
+     */
+    public function createOrUpdateGalleries(array $galleries, object $hotel, bool $type = true)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'is_activated' => 'required|boolean',
-            ]
-        );
+        foreach ($galleries as $file) {
+            if (!empty($file)) {
+                $files = $this->saveImageSize($file, config('settings.public.hotels'), $hotel->id);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->messages(),
-                'status'    => 'error'
-            ], 400);
-        }
-        $hotel = $this->hotelRepository->find($id);
-        if (empty($hotel)) {
-            return response()->json([
-                'status' => 'error',
-                'message' => trans('message.txt_not_found', ['attribute' => trans('message.hotel')])
-            ], 404);
-        }
-        $input = $request->all();
-        $statusUpdated = $this->hotelRepository->update($id, $input);
-        if (!$statusUpdated) {
-            return response()->json([
-                'status' => 'error',
-                'message' => trans('message.txt_updated_status_failure', ['attribute' => trans('message.hotel')])
-            ], 400);
-        }
+                $data = [
+                    'name'   => $hotel->name,
+                    'url'    => $files['url'],
+                    'mime'      => $files['mime'],
+                    'extension' => $files['extension'],
+                    'fileable_id' => $hotel->id,
+                    'fileable_type'  => Hotel::class,
+                ];
 
-        return response()->json([
-            'status' => 'ok',
-            'data' => $statusUpdated,
-            'message' => trans('message.txt_updated_status_successfully', ['attribute' => trans('message.hotel')])
-        ], 200);
+                if ($type) {
+                    $this->fileRepository->create($data);
+                } else {
+                    $this->fileRepository->updateOrCreate( ['fileable_id' => $hotel->id], $data );
+                }
+            }
+        }
     }
 }

@@ -31,4 +31,16 @@ class ServiceRequest extends FormRequest
             'icon'  => 'required|mimes:jpeg,jpg,png|max:' . $limitSize,
         ];
     }
+
+    /**
+     * Prepare parameters from Form Request
+     * @return array
+     */
+    public function parameters()
+    {
+        return [
+            'name' => $this->input('name'),
+            'icon' => $this->file('icon')
+        ];
+    }
 }

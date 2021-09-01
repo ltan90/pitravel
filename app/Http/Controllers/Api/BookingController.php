@@ -35,8 +35,8 @@ class BookingController extends Controller
     }
 
     /**
-     *
-     *
+     * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
     **/
     public function index()
     {
@@ -44,32 +44,24 @@ class BookingController extends Controller
     }
 
     /**
-     *
-     *
+     * Store a newly created resource in storage.
+     * @param \App\Http\Requests\BookingRequest $request
+     * @return \App\Traits\BaseResponse
      **/
     public function store(BookingRequest $request)
     {
-        $hotel = $this->hotelRepository->findById($request->hotel_id);
-        if (empty($hotel)) return $this->getResponseValidate(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]));
+        $data = $request->parameters();
 
-        $data = $request->all();
+        $hotel = $this->hotelRepository->findById($data['booking']['hotel_id']);
+        if (empty($hotel)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]), null, 404);
 
         $customer = $this->customerRepository->findByFieldName('full_name', $data['customer']['full_name']);
         $customer = $customer ? $this->customerRepository->update($customer->id,$data['customer']) : $this->customerRepository->create($data['customer']);
 
-        $booking = [];
-        $booking['hotel_id'] = $data['hotel_id'];
-        $booking['customer_id'] = $customer->id;
-        $booking['code'] = $data['code'].$customer->id.$data['hotel_id'];
-        $booking['arrival_date'] = $data['arrival_date'];
-        $booking['departure_date'] = $data['departure_date'];
-        $booking['adults'] = $data['adults'];
-        $booking['children'] = $data['children'];
-        $booking['rooms'] = $data['rooms'];
-        $booking['note'] = $data['note'];
-        $booking['is_business'] = $data['is_business'];
+        $data['booking']['code'] = $data['booking']['code'].$data['booking']['hotel_id'].$customer->id;
+        $data['booking']['customer_id'] = $customer->id;
 
-        $bookingCreated = $this->bookingRepository->create($booking);
+        $bookingCreated = $this->bookingRepository->create($data['booking']);
 
         $dataEmail['hotel_name'] = $hotel->name;
         $dataEmail['hotel_address'] = $hotel->address;
@@ -78,7 +70,7 @@ class BookingController extends Controller
         $mailTo = $this->configRepository->getMailTo();
         dispatch(new SendEmailJob($mailTo, $dataEmail));
 
-        if (empty($bookingCreated)) return $this->getResponseValidate(false,trans('message.txt_created_failure', ['attribute' => trans('message.booking')]));
+        if (empty($bookingCreated)) return $this->getResponse(false, trans('message.txt_created_failure', ['attribute' => trans('message.booking')]), null, 404);
 
         return $this->getResponse(true, trans('message.txt_created_successfully', ['attribute' => trans('message.booking')]), new BookingResource($bookingCreated));
     }

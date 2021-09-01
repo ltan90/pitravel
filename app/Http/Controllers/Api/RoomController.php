@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomRequest;
 use App\Http\Resources\RoomResource;
-use App\Models\Room;
 use App\Repositories\HotelRepository;
 use App\Repositories\RoomRepository;
-use Illuminate\Http\Request;
+use App\Traits\BaseResponse;
 
 class RoomController extends Controller
 {
+    use BaseResponse;
     protected $hotelRepository;
     protected $roomRepository;
 
@@ -40,20 +40,11 @@ class RoomController extends Controller
     public function store(RoomRequest $request, int $id)
     {
         $hotel = $this->hotelRepository->findById($id);
-        if (empty($hotel)) return response()->json([
-            'status' => 'error',
-            'message' => trans('message.txt_not_found', ['attribute' => trans('message.hotel')])
-        ], 404);
+        if (empty($hotel)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]), null, 404);
 
-        $data = $request->all();
+        $room = $this->roomRepository->create($request->parameters());
 
-        $room = $this->roomRepository->create($data);
-
-        return response()->json([
-            'status' => 'ok',
-            'message' => trans('message.txt_created_successfully', ['attribute' => trans('message.room')]),
-            'data' => new RoomResource($room)
-        ], 200);
+        return $this->getResponse(true, trans('message.txt_created_successfully', ['attribute' => trans('message.room')]), new RoomResource($room));
     }
 
     /**
@@ -67,15 +58,9 @@ class RoomController extends Controller
     {
         $room = $this->roomRepository->findRoomIdByHotelId($id, $room);
 
-        if (empty($room)) return response()->json([
-            'status' => 'error',
-            'message' => trans('message.txt_not_found', ['attribute' => trans('message.room')])
-        ], 404);
-        return response()->json([
-            'status' => 'ok',
-            'message' => '',
-            'data' => new RoomResource($room)
-        ], 200);
+        if (empty($room)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.room')]), null, 404);
+
+        return $this->getResponse(true, trans('message.txt_created_successfully', ['attribute' => trans('message.room')]), new RoomResource($room));
     }
 
     /**
@@ -89,27 +74,14 @@ class RoomController extends Controller
     public function update(RoomRequest $request, int $id, int $room)
     {
         $hotel = $this->hotelRepository->findById($id);
-        if (empty($hotel)) return response()->json([
-            'status' => 'error',
-            'message' => trans('message.txt_not_found', ['attribute' => trans('message.hotel')])
-        ], 404);
+        if (empty($hotel)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.hotel')]), null, 404);
 
         $room = $this->roomRepository->findRoomIdByHotelId($id, $room);
+        if (empty($room)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.room')]), null, 404);
 
-        if (empty($room)) return response()->json([
-            'status' => 'error',
-            'message' => trans('message.txt_not_found', ['attribute' => trans('message.room')])
-        ], 404);
+        $room = $this->roomRepository->update($room->id, $request->parameters());
 
-        $data = $request->all();
-
-        $room = $this->roomRepository->update($room->id, $data);
-
-        return response()->json([
-            'status' => 'ok',
-            'message' => trans('message.txt_updated_successfully', ['attribute' => trans('message.room')]),
-            'data' => new RoomResource($room)
-        ], 200);
+        return $this->getResponse(true, trans('message.txt_updated_successfully', ['attribute' => trans('message.room')]), new RoomResource($room));
     }
 
     /**
@@ -122,14 +94,8 @@ class RoomController extends Controller
     {
         $room = $this->roomRepository->findRoomIdByHotelId($id, $room);
 
-        if (empty($room)) return response()->json([
-            'status' => 'error',
-            'message' => trans('message.txt_not_found', ['attribute' => trans('message.room')])
-        ], 404);
+        if (empty($room)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.room')]), null, 404);
 
-        if ($room->delete()) return response()->json([
-            'status' => 'ok',
-            'message' => trans('message.txt_deleted_successfully', ['attribute' => trans('message.room')])
-        ], 200);
+        if ($room->delete()) return $this->getResponse(true, trans('message.txt_deleted_successfully', ['attribute' => trans('message.room')]));
     }
 }

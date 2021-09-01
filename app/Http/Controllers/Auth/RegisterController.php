@@ -10,7 +10,6 @@ use App\Models\UserProfile;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -86,25 +85,15 @@ class RegisterController extends Controller
      */
     public function register(UserRequest $request)
     {
-        $data = $request->all();
+        $data = $request->parameters();
 
-        $user = new User();
-        $user->username = $data['username'];
-        $user->email = $data['email'];
-        $user->password = Hash::make($data['password']);
-        $user->is_approved = $data['is_approved'];
-
-        $user->save();
+        $user = $this->userRepository->create($data['user']);
         //event(new Registered($user));
 
         $user->profile()->save(new UserProfile($data['profile']));
 
-        $user->roles()->attach(config('constants.ROLE.ADMIN'));
+        $user->roles()->attach($data['role_id']);
 
-        return response()->json([
-            'status' => true,
-            'message' => "Đăng ký user thành công!",
-            'data' => new UserResource($user)
-        ]);
+        return $this->getResponse(true, trans('message.txt_created_user_successfully', ['attribute' => trans('message.user')]), new UserResource($user));
     }
 }

@@ -46,8 +46,7 @@ class ServiceController extends Controller
 
     public function store(ServiceRequest $request)
     {
-        $data = $request->all();
-
+        $data = $request->parameters();
         $service = $this->serviceRepository->create($data);
         if (empty($service)) return $this->getResponse(
             false, trans('message.txt_created_failure', ['attribute' => trans('message.service')]), null, 400
@@ -78,7 +77,7 @@ class ServiceController extends Controller
         $service = $this->serviceRepository->findById($id);
         if (empty($service)) return $this->getResponse(false, trans('message.txt_not_found', ['attribute' => trans('message.service')]), null, 404);
 
-        $data = $request->all();
+        $data = $request->parameters();
         $service = $this->serviceRepository->update($id, $data);
         if (!$service) return $this->getResponseValidate(false, trans('message.txt_updated_failure', ['attribute' => trans('message.service')]));
 
