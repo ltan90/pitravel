@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\RegisterEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\Role;
 use App\Models\UserProfile;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+
+use App\Traits\BaseResponse;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +28,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers, BaseResponse;
 
     /**
      * Where to redirect users after registration.
@@ -87,10 +89,11 @@ class RegisterController extends Controller
     {
         $data = $request->parameters();
 
-        $user = $this->userRepository->create($data['user']);
-        //event(new Registered($user));
+        $user = User::create($data['user']);
 
         $user->profile()->save(new UserProfile($data['profile']));
+
+        event(new RegisterEvent($user, $user->profile));
 
         $user->roles()->attach($data['role_id']);
 
